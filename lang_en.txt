@@ -57,7 +57,9 @@ JITTER_ALL_INFO = Average jitter since start
 
 # Metric row labels
 METRIC_LOSS_LABEL = Loss
-METRIC_PING_LABEL = Ping
+METRIC_PING_AVG_LABEL = Ping avg
+METRIC_PING_P90_LABEL = Ping p90
+METRIC_PING_P99_LABEL = Ping p99
 METRIC_JITTER_LABEL = Jitter
 
 QUALITY_LABEL = Quality

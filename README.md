@@ -7,7 +7,7 @@
 - Periodic ICMP ping to a configurable host (hostname or IP)
 - Recent-window vs whole-session statistics for:
   - Packet loss
-  - Min/avg/max latency
+  - Ping average and high-latency percentiles (p90, p99)
   - Jitter (variation between successful pings)
 - Quality classification (Excellent / Good / Fair / Poor) based on recent stats
 - Alerts for delay spikes or high recent packet loss
@@ -59,7 +59,9 @@ The top section shows:
 The main metrics table compares **Window** vs **Session** for:
 
 - **Loss** – recent and session packet loss (percentage and counts)
-- **Ping** – min/avg/max latency
+- **Ping avg** – average latency
+- **Ping p90** – latency at the 90th percentile (worse than 90% of pings)
+- **Ping p99** – latency at the 99th percentile (worst spikes)
 - **Jitter** – average difference between consecutive successful pings
 
 The bottom section shows traceroute status, an optional summary line, and a hop-by-hop table (either compact or full, depending on mode).

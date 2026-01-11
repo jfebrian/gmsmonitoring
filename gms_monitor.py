@@ -435,6 +435,27 @@ def format_ping_value(ms):
 
 
 
+def percentile(values: list[float], pct: float) -> float | None:
+    """Return an approximate percentile from a list of numeric values.
+
+    Uses a simple rank-based approach and is intended for small sample sizes.
+    """
+    if not values:
+        return None
+    if pct <= 0:
+        return min(values)
+    if pct >= 100:
+        return max(values)
+
+    sorted_vals = sorted(values)
+    n = len(sorted_vals)
+    # Rank in [0, n-1]
+    rank = int(round((pct / 100.0) * (n - 1)))
+    rank = max(0, min(n - 1, rank))
+    return sorted_vals[rank]
+
+
+
 def compute_recent_stats(ping_history, window_size):
     """
     Compute recent packet loss and ping statistics over the last `window_size` checks.
@@ -591,6 +612,15 @@ def draw_ui(stdscr, state: MonitorState):
         jitter_ms,
     ) = compute_recent_stats(ping_history, window_size)
 
+    # Percentiles for window and session
+    window_successes = [v for v in ping_history[-window_size:] if v is not None]
+    session_successes = [v for v in ping_history if v is not None]
+
+    p90_win = percentile(window_successes, 90.0) if window_successes else None
+    p99_win = percentile(window_successes, 99.0) if window_successes else None
+    p90_all = percentile(session_successes, 90.0) if session_successes else None
+    p99_all = percentile(session_successes, 99.0) if session_successes else None
+
     # Derive quality label from recent stats
     quality_label = tr("QUALITY_UNKNOWN")
     if recent_count >= max(20, window_size // 2) and recent_avg_ping is not None:
@@ -629,7 +659,7 @@ def draw_ui(stdscr, state: MonitorState):
     metrics_start_y = top_row_y + 1
 
     if metrics_start_y < max_y:
-        header = f"{'Metric':<8} {'Window':<36} | {'Session':<36}"
+        header = f"{'Metric':<14} {'Window (recent)':<18} {'Session (all)':<18}"
         stdscr.addnstr(metrics_start_y, 0, header[:max_x], max_x)
 
     row_y = metrics_start_y + 1
@@ -638,7 +668,7 @@ def draw_ui(stdscr, state: MonitorState):
         nonlocal row_y
         if row_y >= max_y:
             return
-        line = f"{label:<8} {win:<36.36} | {all_:<36.36}"
+        line = f"{label:<14} {win:<18.18} {all_:<18.18}"
         stdscr.addnstr(row_y, 0, line[:max_x], max_x)
         row_y += 1
 
@@ -655,28 +685,44 @@ def draw_ui(stdscr, state: MonitorState):
 
     add_metric_row(tr("METRIC_LOSS_LABEL"), loss_win_str, loss_all_str)
 
-    # Ping row
-    if recent_avg_ping is None or recent_min_ping is None or recent_max_ping is None:
-        ping_win_str = tr("PING_WIN_VALUE_WAIT")
+    # Ping avg row
+    if recent_avg_ping is None:
+        ping_avg_win_str = tr("PING_WIN_VALUE_WAIT")
     else:
-        ping_win_str = tr(
-            "PING_WIN_VALUE",
-            min_ms=format_ping_value(recent_min_ping),
-            avg_ms=format_ping_value(recent_avg_ping),
-            max_ms=format_ping_value(recent_max_ping),
-        )
+        ping_avg_win_str = f"{format_ping_value(recent_avg_ping)} ms"
 
-    if avg_rtt_all is None or min_rtt_all is None or max_rtt_all is None:
-        ping_all_str = tr("PING_ALL_VALUE_WAIT")
+    if avg_rtt_all is None:
+        ping_avg_all_str = tr("PING_ALL_VALUE_WAIT")
     else:
-        ping_all_str = tr(
-            "PING_ALL_VALUE",
-            min_ms=format_ping_value(min_rtt_all),
-            avg_ms=format_ping_value(avg_rtt_all),
-            max_ms=format_ping_value(max_rtt_all),
-        )
+        ping_avg_all_str = f"{format_ping_value(avg_rtt_all)} ms"
 
-    add_metric_row(tr("METRIC_PING_LABEL"), ping_win_str, ping_all_str)
+    add_metric_row(tr("METRIC_PING_AVG_LABEL"), ping_avg_win_str, ping_avg_all_str)
+
+    # Ping p90 row
+    if p90_win is None:
+        ping_p90_win_str = tr("PING_WIN_VALUE_WAIT")
+    else:
+        ping_p90_win_str = f"{format_ping_value(p90_win)} ms"
+
+    if p90_all is None:
+        ping_p90_all_str = tr("PING_ALL_VALUE_WAIT")
+    else:
+        ping_p90_all_str = f"{format_ping_value(p90_all)} ms"
+
+    add_metric_row(tr("METRIC_PING_P90_LABEL"), ping_p90_win_str, ping_p90_all_str)
+
+    # Ping p99 row
+    if p99_win is None:
+        ping_p99_win_str = tr("PING_WIN_VALUE_WAIT")
+    else:
+        ping_p99_win_str = f"{format_ping_value(p99_win)} ms"
+
+    if p99_all is None:
+        ping_p99_all_str = tr("PING_ALL_VALUE_WAIT")
+    else:
+        ping_p99_all_str = f"{format_ping_value(p99_all)} ms"
+
+    add_metric_row(tr("METRIC_PING_P99_LABEL"), ping_p99_win_str, ping_p99_all_str)
 
     # Jitter row
     if jitter_ms is None:
@@ -698,6 +744,7 @@ def draw_ui(stdscr, state: MonitorState):
         ping_history, SHORT_WINDOW_SIZE
     )
 
+    # Leave one blank line between metrics and alerts/traceroute
     extras_start_y = table_bottom_y + 1
     next_y = extras_start_y
 
