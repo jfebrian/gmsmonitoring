@@ -411,9 +411,8 @@ def traceroute_worker(state: MonitorState):
         state.last_traceroute_ts = time.time()
 
 
-# For extra loss windows (used in admin stats)
-SHORT_WINDOW_SIZE = 10     # ~10 seconds
-LONG_WINDOW_SIZE = 600     # ~10 minutes with 1s interval
+# Short loss window used for alerts (in checks)
+SHORT_WINDOW_SIZE = 10     # ~10 seconds at 1s interval
 
 
 
@@ -706,46 +705,13 @@ def draw_ui(stdscr, state: MonitorState):
 
     table_bottom_y = row_y
 
-    # Compute short- and long-term stats for alerts and admin view
+    # Compute short-term stats for alerts
     short_loss_pct, short_avg_ping, short_count, short_lost, short_min_ping, short_max_ping, _ = compute_recent_stats(
         ping_history, SHORT_WINDOW_SIZE
     )
-    long_loss_pct, _, long_count, long_lost, _, _, _ = compute_recent_stats(
-        ping_history, LONG_WINDOW_SIZE
-    )
 
-    # Extra stats: short vs long loss
     extras_start_y = table_bottom_y + 1
     next_y = extras_start_y
-
-    if next_y < max_y:
-        # Short term loss (e.g. last 10 checks)
-        if short_count > 0:
-            short_text = tr(
-                "SHORT_LOSS_VALUE",
-                seconds=SHORT_WINDOW_SIZE,
-                loss_pct=short_loss_pct,
-                lost=short_lost,
-                count=short_count,
-            )
-        else:
-            short_text = tr("SHORT_LOSS_WAIT")
-        stdscr.addnstr(next_y, 0, short_text[:max_x], max_x)
-        next_y += 1
-
-        if next_y < max_y:
-            if long_count > 0:
-                long_text = tr(
-                    "LONG_LOSS_VALUE",
-                    seconds=min(long_count, LONG_WINDOW_SIZE),
-                    loss_pct=long_loss_pct,
-                    lost=long_lost,
-                    count=long_count,
-                )
-            else:
-                long_text = tr("LONG_LOSS_WAIT")
-            stdscr.addnstr(next_y, 0, long_text[:max_x], max_x)
-            next_y += 1
 
     # Spike indicator: detect significant short-term issues (shown to all users)
     # We look only at the short-term window here so alerts are tied to recent changes.

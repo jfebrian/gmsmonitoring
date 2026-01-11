@@ -10,7 +10,6 @@
   - Min/avg/max latency
   - Jitter (variation between successful pings)
 - Quality classification (Excellent / Good / Fair / Poor) based on recent stats
-- Short- and long-window loss summaries
 - Alerts for delay spikes or high recent packet loss
 - Integrated `traceroute` with:
   - Live streaming of output while running
@@ -62,8 +61,6 @@ The main metrics table compares **Window** vs **Session** for:
 - **Loss** – recent and session packet loss (percentage and counts)
 - **Ping** – min/avg/max latency
 - **Jitter** – average difference between consecutive successful pings
-
-Extra lines show short- and long-window loss summaries.
 
 The bottom section shows traceroute status, an optional summary line, and a hop-by-hop table (either compact or full, depending on mode).
 
