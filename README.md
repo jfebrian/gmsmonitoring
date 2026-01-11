@@ -10,7 +10,7 @@
   - Min/avg/max latency
   - Jitter (variation between successful pings)
 - Quality classification (Excellent / Good / Fair / Poor) based on recent stats
-- Short- and long-window loss summaries (admin mode)
+- Short- and long-window loss summaries
 - Alerts for delay spikes or high recent packet loss
 - Integrated `traceroute` with:
   - Live streaming of output while running
@@ -30,12 +30,11 @@
 From the repository root:
 
 ```bash
-python3 gms_monitor.py [--admin] [--lang LANG] [--host HOST]
+python3 gms_monitor.py [--lang LANG] [--host HOST]
 ```
 
 Options:
 
-- `--admin` – enable extra diagnostics (short/long loss windows under the metrics table)
 - `--lang {en,id}` – UI language (default: `en`)
 - `--host HOST` – target hostname or IP address to monitor (default: `www.youtube.com`)
 
@@ -45,11 +44,8 @@ Examples:
 # Default: monitor www.youtube.com in English
 python3 gms_monitor.py
 
-# Monitor 8.8.8.8 in Indonesian
-python3 gms_monitor.py --host 8.8.8.8 --lang id
-
-# Enable admin-only controls
-python3 gms_monitor.py --admin
+# Monitor another host in Indonesian
+python3 gms_monitor.py --host example.com --lang id
 ```
 
 ## On-screen information
@@ -67,7 +63,7 @@ The main metrics table compares **Window** vs **Session** for:
 - **Ping** – min/avg/max latency
 - **Jitter** – average difference between consecutive successful pings
 
-In admin mode, extra lines show short- and long-window loss summaries.
+Extra lines show short- and long-window loss summaries.
 
 The bottom section shows traceroute status, an optional summary line, and a hop-by-hop table (either compact or full, depending on mode).
 

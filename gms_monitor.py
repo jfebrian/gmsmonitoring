@@ -486,7 +486,7 @@ def compute_recent_stats(ping_history, window_size):
     )
 
 
-def draw_ui(stdscr, state: MonitorState, admin_mode: bool):
+def draw_ui(stdscr, state: MonitorState):
     stdscr.clear()
     max_y, max_x = stdscr.getmaxyx()
 
@@ -552,11 +552,6 @@ def draw_ui(stdscr, state: MonitorState, admin_mode: bool):
         hint = tr("CONTROLS_HINT")
         stdscr.addnstr(2, 0, hint[:max_x], max_x)
         controls_bottom_y = 2
-
-    if admin_mode:
-        admin_controls = tr("ADMIN_CONTROLS")
-        stdscr.addnstr(controls_bottom_y + 1, 0, admin_controls[:max_x], max_x)
-        controls_bottom_y += 1
 
     # Top info table: status, ping now, quality, and window
     if show_controls:
@@ -719,11 +714,11 @@ def draw_ui(stdscr, state: MonitorState, admin_mode: bool):
         ping_history, LONG_WINDOW_SIZE
     )
 
-    # Admin-only extra stats: short vs long loss
+    # Extra stats: short vs long loss
     extras_start_y = table_bottom_y + 1
     next_y = extras_start_y
 
-    if admin_mode and next_y < max_y:
+    if next_y < max_y:
         # Short term loss (e.g. last 10 checks)
         if short_count > 0:
             short_text = tr(
@@ -754,7 +749,7 @@ def draw_ui(stdscr, state: MonitorState, admin_mode: bool):
 
     # Spike indicator: detect significant short-term issues (shown to all users)
     # We look only at the short-term window here so alerts are tied to recent changes.
-    alert_y = next_y if admin_mode else extras_start_y
+    alert_y = next_y
     if alert_y < max_y:
         alert_text = ""
         # Consider a significant delay spike if max ping is much higher than average
@@ -856,7 +851,7 @@ def draw_ui(stdscr, state: MonitorState, admin_mode: bool):
     stdscr.refresh()
 
 
-def main(stdscr, admin_mode: bool, target_host: str):
+def main(stdscr, target_host: str):
     curses.curs_set(0)
     stdscr.nodelay(True)
     stdscr.timeout(200)  # getch timeout in ms
@@ -880,7 +875,7 @@ def main(stdscr, admin_mode: bool, target_host: str):
     traceroute_thread.start()
 
     while True:
-        draw_ui(stdscr, state, admin_mode=admin_mode)
+        draw_ui(stdscr, state)
 
         try:
             ch = stdscr.getch()
@@ -964,11 +959,6 @@ if __name__ == "__main__":
         description="Simple network stability monitor (GMS)."
     )
     parser.add_argument(
-        "--admin",
-        action="store_true",
-        help="enable extra controls for admins (time window adjustments).",
-    )
-    parser.add_argument(
         "--lang",
         default="en",
         choices=SUPPORTED_LANGS,
@@ -982,4 +972,4 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     set_language(args.lang)
-    curses.wrapper(lambda stdscr: main(stdscr, admin_mode=args.admin, target_host=args.host))
+    curses.wrapper(lambda stdscr: main(stdscr, target_host=args.host))
