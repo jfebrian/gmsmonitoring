@@ -822,6 +822,18 @@ def main(stdscr, target_host: str):
     stdscr.nodelay(True)
     stdscr.timeout(200)  # getch timeout in ms
 
+    # Ensure a clean background using the terminal's default colors
+    try:
+        if curses.has_colors():
+            curses.start_color()
+            curses.use_default_colors()
+    except curses.error:
+        # Some terminals may not support color initialization; ignore in that case.
+        pass
+    stdscr.bkgd(" ", curses.A_NORMAL)
+    stdscr.clear()
+    stdscr.refresh()
+
     state = MonitorState(target_host)
 
     # Start ping worker
