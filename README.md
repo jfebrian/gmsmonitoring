@@ -53,7 +53,7 @@ The top section shows:
 
 - **Status** – Monitoring / Paused, including the current target host (e.g. `Monitoring (www.youtube.com)`).
 - **Ping now** – last ping result or timeout.
-- **Quality** – textual quality rating with an optional explanation when help is enabled.
+- **Quality** – textual quality rating for the recent window.
 - **Window** – number of recent checks used for the "window" statistics.
 
 The main metrics table compares **Window** vs **Session** for:
@@ -73,7 +73,6 @@ General controls:
 - `T` – Run traceroute (if not already running)
 - `F` – Toggle between summary and full traceroute table view
 - `L` – Toggle UI language (cycle through supported languages)
-- `H` – Toggle extra help / explanations for some fields
 - `K` – Toggle visibility of the controls/keys guide
 - `↑ / ↓` – Scroll traceroute output when in full view and more lines are available
 - `+` – Increase the stats window size (up to the history limit)

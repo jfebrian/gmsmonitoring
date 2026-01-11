@@ -6,7 +6,6 @@ KEY_ACTION_R = Lanjutkan monitoring
 KEY_ACTION_T = Jalankan traceroute
 KEY_ACTION_F = Tampilkan ringkasan/full traceroute
 KEY_ACTION_L = Ganti bahasa
-KEY_ACTION_H = Tampilkan/sembunyikan penjelasan nilai
 KEY_ACTION_K = Tampilkan/sembunyikan tabel tombol
 KEY_ACTION_SCROLL = Scroll traceroute ke atas/bawah
 KEY_ACTION_Q = Keluar
@@ -63,15 +62,10 @@ METRIC_JITTER_LABEL = Jitter
 
 QUALITY_LABEL = Kualitas
 QUALITY_UNKNOWN = Tidak diketahui
-QUALITY_UNKNOWN_REASON = data belum cukup
 QUALITY_EXCELLENT = Excellent
-QUALITY_EXCELLENT_REASON = loss sangat rendah dan ping sangat stabil
 QUALITY_GOOD = Good
-QUALITY_GOOD_REASON = loss rendah dan ping cukup stabil
 QUALITY_FAIR = Fair
-QUALITY_FAIR_REASON = ada sedikit loss atau lonjakan ping
 QUALITY_POOR = Poor
-QUALITY_POOR_REASON = loss tinggi atau ping tinggi
 
 TOTAL_LOSS_LABEL = TOTAL_LOSS
 TOTAL_LOSS_VALUE = {lost}/{sent}

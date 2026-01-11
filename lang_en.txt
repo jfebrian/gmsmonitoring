@@ -6,7 +6,6 @@ KEY_ACTION_R = Resume monitoring
 KEY_ACTION_T = Run traceroute
 KEY_ACTION_F = Show traceroute summary/full
 KEY_ACTION_L = Change language
-KEY_ACTION_H = Toggle help for values
 KEY_ACTION_K = Show/hide keys table
 KEY_ACTION_SCROLL = Scroll traceroute up/down
 KEY_ACTION_Q = Quit
@@ -63,15 +62,10 @@ METRIC_JITTER_LABEL = Jitter
 
 QUALITY_LABEL = Quality
 QUALITY_UNKNOWN = Unknown
-QUALITY_UNKNOWN_REASON = not enough data yet
 QUALITY_EXCELLENT = Excellent
-QUALITY_EXCELLENT_REASON = very low loss and very stable delay
 QUALITY_GOOD = Good
-QUALITY_GOOD_REASON = low loss and stable delay
 QUALITY_FAIR = Fair
-QUALITY_FAIR_REASON = some loss or occasional delay spikes
 QUALITY_POOR = Poor
-QUALITY_POOR_REASON = high loss or high delay
 
 TOTAL_LOSS_LABEL = TOTAL_LOSS
 TOTAL_LOSS_VALUE = {lost}/{sent}

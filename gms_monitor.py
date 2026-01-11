@@ -106,7 +106,6 @@ class MonitorState:
         # Control flags
         self.running = True          # overall program running
         self.monitoring = True       # whether ping loop is active
-        self.show_help = False       # descriptions hidden by default
         self.show_traceroute_full = False  # summary by default; F toggles details
         self.traceroute_scroll = 0         # scroll position for traceroute output
         self.show_controls = False         # whether to show the keys guide (hidden by default)
@@ -502,7 +501,6 @@ def draw_ui(stdscr, state: MonitorState):
         traceroute_summary = state.traceroute_summary
         last_traceroute_ts = state.last_traceroute_ts
         window_size = state.window_size
-        show_help = state.show_help
         show_traceroute_full = state.show_traceroute_full
         traceroute_scroll = state.traceroute_scroll
         show_controls = state.show_controls
@@ -532,7 +530,6 @@ def draw_ui(stdscr, state: MonitorState):
             ("T", tr("KEY_ACTION_T")),
             ("F", tr("KEY_ACTION_F")),
             ("L", tr("KEY_ACTION_L")),
-            ("H", tr("KEY_ACTION_H")),
             ("K", tr("KEY_ACTION_K")),
             ("↑/↓", tr("KEY_ACTION_SCROLL")),
             ("Q", tr("KEY_ACTION_Q")),
@@ -596,20 +593,15 @@ def draw_ui(stdscr, state: MonitorState):
 
     # Derive quality label from recent stats
     quality_label = tr("QUALITY_UNKNOWN")
-    quality_reason = tr("QUALITY_UNKNOWN_REASON")
     if recent_count >= max(20, window_size // 2) and recent_avg_ping is not None:
         if recent_loss_pct < 1.0 and recent_avg_ping < 40 and (jitter_ms is None or jitter_ms < 5):
             quality_label = tr("QUALITY_EXCELLENT")
-            quality_reason = tr("QUALITY_EXCELLENT_REASON")
         elif recent_loss_pct < 2.0 and recent_avg_ping < 80:
             quality_label = tr("QUALITY_GOOD")
-            quality_reason = tr("QUALITY_GOOD_REASON")
         elif recent_loss_pct < 5.0 and recent_avg_ping < 150:
             quality_label = tr("QUALITY_FAIR")
-            quality_reason = tr("QUALITY_FAIR_REASON")
         else:
             quality_label = tr("QUALITY_POOR")
-            quality_reason = tr("QUALITY_POOR_REASON")
 
     lost_overall = total_sent - total_recv
     overall_loss_pct = 0.0 if total_sent == 0 else (1.0 - (total_recv / total_sent)) * 100.0
@@ -632,10 +624,6 @@ def draw_ui(stdscr, state: MonitorState):
     window_value = tr("WINDOW_VALUE", window_checks=window_size)
     add_top_row(tr("WINDOW_LABEL"), window_value)
 
-    # Optional quality reason line
-    if show_help and quality_reason and top_row_y < max_y:
-        stdscr.addnstr(top_row_y, 2, f"- {quality_reason}"[: max_x - 2], max_x - 2)
-        top_row_y += 1
     # --- Metrics table: window vs session ---
     # Leave one blank line between top info and metrics table
     metrics_start_y = top_row_y + 1
@@ -887,11 +875,6 @@ def main(stdscr, target_host: str):
                     daemon=True,
                 )
                 t.start()
-
-        elif ch in (ord("h"), ord("H")):
-            # Toggle help / description visibility
-            with state.lock:
-                state.show_help = not state.show_help
 
         elif ch in (ord("f"), ord("F")):
             # Toggle traceroute full/summary view
