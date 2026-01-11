@@ -35,7 +35,7 @@ python3 gms_monitor.py [--admin] [--lang LANG] [--host HOST]
 
 Options:
 
-- `--admin` – enable extra controls and diagnostics (short/long loss windows, adjustable stats window)
+- `--admin` – enable extra diagnostics (short/long loss windows under the metrics table)
 - `--lang {en,id}` – UI language (default: `en`)
 - `--host HOST` – target hostname or IP address to monitor (default: `www.youtube.com`)
 
@@ -83,12 +83,9 @@ General controls:
 - `H` – Toggle extra help / explanations for some fields
 - `K` – Toggle visibility of the controls/keys guide
 - `↑ / ↓` – Scroll traceroute output when in full view and more lines are available
-- `Q` – Quit the application
-
-Admin-only controls (require `--admin`):
-
 - `+` – Increase the stats window size (up to the history limit)
 - `-` – Decrease the stats window size (down to the minimum)
+- `Q` – Quit the application
 
 ## Localization
 

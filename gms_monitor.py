@@ -945,13 +945,13 @@ def main(stdscr, admin_mode: bool, target_host: str):
             with state.lock:
                 state.show_controls = not state.show_controls
 
-        # Admin-only: increase / decrease time window
-        elif admin_mode and ch == ord('+'):
+        # Increase / decrease time window (available to all users)
+        elif ch == ord('+'):
             with state.lock:
                 new_size = state.window_size + 10
                 state.window_size = min(new_size, PING_HISTORY_LENGTH)
 
-        elif admin_mode and ch == ord('-'):
+        elif ch == ord('-'):
             with state.lock:
                 new_size = state.window_size - 10
                 if new_size < MIN_WINDOW_SIZE:
