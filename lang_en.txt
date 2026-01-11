@@ -1,0 +1,101 @@
+# General
+HELP_HEADER = Keys
+KEYS_ACTION_HEADER = Action
+KEY_ACTION_P = Pause monitoring
+KEY_ACTION_R = Resume monitoring
+KEY_ACTION_T = Run traceroute
+KEY_ACTION_F = Show traceroute summary/full
+KEY_ACTION_L = Change language
+KEY_ACTION_H = Toggle help for values
+KEY_ACTION_K = Show/hide keys table
+KEY_ACTION_SCROLL = Scroll traceroute up/down
+KEY_ACTION_Q = Quit
+CONTROLS_HINT = Press K to see all keys
+ADMIN_CONTROLS = Admin only:  + = More time  |  - = Less time
+
+# Status / window
+STATUS_MONITORING = Monitoring
+STATUS_PAUSED = Paused
+STATUS_LABEL = Status
+WINDOW_LABEL = Window
+WINDOW_VALUE = last {window_checks} checks (about {window_checks} seconds)
+STATUS_LINE = Status: {status}    Time window: last {window_checks} checks (about {window_checks} seconds)
+
+# Table labels & info
+PING_NOW_LABEL = Current ping
+PING_NOW_VALUE_TIMEOUT = timeout / no reply
+PING_NOW_INFO = Most recent response time
+
+LOSS_WIN_LABEL = LOSS_WIN
+LOSS_WIN_VALUE_WAIT = waiting...
+LOSS_WIN_VALUE = {loss_pct:.1f}% ({lost}/{count})
+LOSS_WIN_INFO = Loss % and lost/total checks in window
+
+LOSS_ALL_LABEL = LOSS_ALL
+LOSS_ALL_VALUE_WAIT = waiting...
+LOSS_ALL_VALUE = {loss_pct:.1f}% ({lost}/{sent})
+LOSS_ALL_INFO = Packet loss for whole session
+
+PING_WIN_LABEL = PING_WIN
+PING_WIN_VALUE_WAIT = waiting...
+PING_WIN_VALUE = min {min_ms} / avg {avg_ms} / max {max_ms} ms
+PING_WIN_INFO = Min/avg/max ping in the current time window
+
+PING_ALL_LABEL = PING_ALL
+PING_ALL_VALUE_WAIT = waiting...
+PING_ALL_VALUE = min {min_ms} / avg {avg_ms} / max {max_ms} ms
+PING_ALL_INFO = Ping min/avg/max since start
+
+JITTER_WIN_LABEL = JITTER_WIN
+JITTER_WIN_VALUE_WAIT = waiting...
+JITTER_WIN_VALUE = {jitter_ms:.1f} ms
+JITTER_WIN_INFO = How much the ping changes in this window; lower = smoother
+
+JITTER_ALL_LABEL = JITTER_ALL
+JITTER_ALL_VALUE_WAIT = waiting...
+JITTER_ALL_VALUE = {jitter_ms:.1f} ms
+JITTER_ALL_INFO = Average jitter since start
+
+# Metric row labels
+METRIC_LOSS_LABEL = Loss
+METRIC_PING_LABEL = Ping
+METRIC_JITTER_LABEL = Jitter
+
+QUALITY_LABEL = Quality
+QUALITY_UNKNOWN = Unknown
+QUALITY_UNKNOWN_REASON = not enough data yet
+QUALITY_EXCELLENT = Excellent
+QUALITY_EXCELLENT_REASON = very low loss and very stable delay
+QUALITY_GOOD = Good
+QUALITY_GOOD_REASON = low loss and stable delay
+QUALITY_FAIR = Fair
+QUALITY_FAIR_REASON = some loss or occasional delay spikes
+QUALITY_POOR = Poor
+QUALITY_POOR_REASON = high loss or high delay
+
+TOTAL_LOSS_LABEL = TOTAL_LOSS
+TOTAL_LOSS_VALUE = {lost}/{sent}
+TOTAL_LOSS_INFO = Total lost / total checks since start
+
+# Admin extra stats
+SHORT_LOSS_WAIT = Short-term loss: waiting for data...
+SHORT_LOSS_VALUE = Short-term loss (~{seconds} sec): {loss_pct:.1f}% (timeouts: {lost} of {count})
+LONG_LOSS_WAIT = Long-term loss: waiting for data...
+LONG_LOSS_VALUE = Long-term loss (~{seconds} sec): {loss_pct:.1f}% (timeouts: {lost} of {count})
+
+# Alerts
+ALERT_DELAY_SPIKE = ALERT: delay spike detected (one or more very slow checks).
+ALERT_HIGH_LOSS = ALERT: packet loss has been high in the last few seconds (10% or more).
+
+# Traceroute
+TRACE_RUNNING = Route check to {host}: running...
+TRACE_FAILED = Route check to {host}: failed (press T to try again)
+TRACE_SUMMARY = Route check to {host}: summary (press F for full details, T to run again)
+TRACE_FULL = Route check to {host}: full details (press F for summary, T to run again)
+TRACE_SUMMARY_HINT = ... (summary: showing last hops only)
+TRACE_TIMEOUT_INFO_NONE = no timeouts
+TRACE_TIMEOUT_INFO_SOME = timeouts on hops {hops}
+TRACE_FINAL_SUMMARY = Summary: {hops} hops, max delay {max_ms:.1f} ms, {timeout_info}
+TRACE_LAST_RUN = Last route check at {time}
+TRACE_LAST_RUN_SHORT = last {time}
+TRACE_ERROR_PREFIX = [Route check error: {error}]

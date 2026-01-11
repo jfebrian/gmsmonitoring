@@ -1,0 +1,101 @@
+# Umum
+HELP_HEADER = Tombol (keys)
+KEYS_ACTION_HEADER = Aksi
+KEY_ACTION_P = Pause monitoring
+KEY_ACTION_R = Lanjutkan monitoring
+KEY_ACTION_T = Jalankan traceroute
+KEY_ACTION_F = Tampilkan ringkasan/full traceroute
+KEY_ACTION_L = Ganti bahasa
+KEY_ACTION_H = Tampilkan/sembunyikan penjelasan nilai
+KEY_ACTION_K = Tampilkan/sembunyikan tabel tombol
+KEY_ACTION_SCROLL = Scroll traceroute ke atas/bawah
+KEY_ACTION_Q = Keluar
+CONTROLS_HINT = Tekan K untuk melihat semua tombol
+ADMIN_CONTROLS = Admin saja:  + = Waktu lebih lama  |  - = Waktu lebih singkat
+
+# Status / jendela
+STATUS_MONITORING = Monitoring
+STATUS_PAUSED = Paused
+STATUS_LABEL = Status
+WINDOW_LABEL = Window
+WINDOW_VALUE = {window_checks} ping terakhir (±{window_checks} detik)
+STATUS_LINE = Status: {status}    Window: {window_checks} ping terakhir (±{window_checks} detik)
+
+# Label tabel & info
+PING_NOW_LABEL = Ping sekarang
+PING_NOW_VALUE_TIMEOUT = tidak ada balasan
+PING_NOW_INFO = Waktu respons terakhir
+
+LOSS_WIN_LABEL = LOSS_WIN
+LOSS_WIN_VALUE_WAIT = menunggu...
+LOSS_WIN_VALUE = {loss_pct:.1f}% ({lost}/{count})
+LOSS_WIN_INFO = Loss % dan hilang/total dalam window
+
+LOSS_ALL_LABEL = LOSS_ALL
+LOSS_ALL_VALUE_WAIT = menunggu...
+LOSS_ALL_VALUE = {loss_pct:.1f}% ({lost}/{sent})
+LOSS_ALL_INFO = Loss % untuk seluruh sesi
+
+PING_WIN_LABEL = PING_WIN
+PING_WIN_VALUE_WAIT = menunggu...
+PING_WIN_VALUE = min {min_ms} / rata {avg_ms} / maks {max_ms} ms
+PING_WIN_INFO = Ping min/rata/maks di window
+
+PING_ALL_LABEL = PING_ALL
+PING_ALL_VALUE_WAIT = menunggu...
+PING_ALL_VALUE = min {min_ms} / rata {avg_ms} / maks {max_ms} ms
+PING_ALL_INFO = Ping min/rata/maks sejak start
+
+JITTER_WIN_LABEL = JITTER_WIN
+JITTER_WIN_VALUE_WAIT = menunggu...
+JITTER_WIN_VALUE = {jitter_ms:.1f} ms
+JITTER_WIN_INFO = Seberapa besar ping berubah di window ini; lebih kecil = lebih stabil
+
+JITTER_ALL_LABEL = JITTER_ALL
+JITTER_ALL_VALUE_WAIT = menunggu...
+JITTER_ALL_VALUE = {jitter_ms:.1f} ms
+JITTER_ALL_INFO = Rata-rata jitter sejak start
+
+# Label baris metric
+METRIC_LOSS_LABEL = Loss
+METRIC_PING_LABEL = Ping
+METRIC_JITTER_LABEL = Jitter
+
+QUALITY_LABEL = Kualitas
+QUALITY_UNKNOWN = Tidak diketahui
+QUALITY_UNKNOWN_REASON = data belum cukup
+QUALITY_EXCELLENT = Excellent
+QUALITY_EXCELLENT_REASON = loss sangat rendah dan ping sangat stabil
+QUALITY_GOOD = Good
+QUALITY_GOOD_REASON = loss rendah dan ping cukup stabil
+QUALITY_FAIR = Fair
+QUALITY_FAIR_REASON = ada sedikit loss atau lonjakan ping
+QUALITY_POOR = Poor
+QUALITY_POOR_REASON = loss tinggi atau ping tinggi
+
+TOTAL_LOSS_LABEL = TOTAL_LOSS
+TOTAL_LOSS_VALUE = {lost}/{sent}
+TOTAL_LOSS_INFO = Total hilang / total ping sejak start
+
+# Admin extra stats
+SHORT_LOSS_WAIT = Short-term loss: menunggu data...
+SHORT_LOSS_VALUE = Short-term loss (~{seconds} dtk): {loss_pct:.1f}% (hilang: {lost} dari {count})
+LONG_LOSS_WAIT = Long-term loss: menunggu data...
+LONG_LOSS_VALUE = Long-term loss (~{seconds} dtk): {loss_pct:.1f}% (hilang: {lost} dari {count})
+
+# Alerts
+ALERT_DELAY_SPIKE = PERINGATAN: spike delay terdeteksi (beberapa ping sangat lambat).
+ALERT_HIGH_LOSS = PERINGATAN: loss tinggi dalam beberapa detik terakhir (10% atau lebih).
+
+# Traceroute
+TRACE_RUNNING = Route ke {host}: berjalan...
+TRACE_FAILED = Route ke {host}: gagal (tekan T untuk coba lagi)
+TRACE_SUMMARY = Route ke {host}: summary (tekan F untuk full detail, T untuk jalankan lagi)
+TRACE_FULL = Route ke {host}: full detail (tekan F untuk summary, T untuk jalankan lagi)
+TRACE_SUMMARY_HINT = ... (summary: hanya hop terakhir yang ditampilkan)
+TRACE_TIMEOUT_INFO_NONE = tidak ada timeout
+TRACE_TIMEOUT_INFO_SOME = timeout pada hop {hops}
+TRACE_FINAL_SUMMARY = Summary: {hops} hop, delay maksimum {max_ms:.1f} ms, {timeout_info}
+TRACE_LAST_RUN = Route terakhir pukul {time}
+TRACE_LAST_RUN_SHORT = terakhir {time}
+TRACE_ERROR_PREFIX = [Error route: {error}]
